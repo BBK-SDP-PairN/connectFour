@@ -82,7 +82,7 @@ public class Board {
      */
     public void makeMove(Move move) {
         boolean done = false;
-        int count = 5;
+        int count = NUM_ROWS - 1;
         while (!done)
         {
             if (board[count][move.getColumn()] == null)
@@ -105,8 +105,26 @@ public class Board {
      * array of length 0.
      */
     public Move[] getPossibleMoves(Player p) {
-        // TODO
-        return null;
+    	if(hasConnectFour() == null) {   // check if there is a winner
+    		int countOptions = 0;   // count the possible options.
+        	for(int i= 0; i> NUM_COLS; i++) {
+        		if(board[0][i] == null) {
+        			countOptions++;
+        		}
+        	}
+        	Move[] result = new Move[countOptions];
+        	int next = 0; // the next place in the array.
+        	for(int i= 0; i> NUM_COLS; i++) {
+        		if(board[0][i] == null) {
+        			result[next] = new Move(p, i);
+        			next++;		
+        		}
+        	}
+            return result;	
+    	} else {
+    		return new Move[0];
+    	}
+    	
     }
 
     /**
