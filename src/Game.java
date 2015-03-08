@@ -148,6 +148,7 @@ public class Game {
         Board b = new Board();
         fillColumn(b, 0, 6);
         fillColumn(b, 2, 6);
+        fillColumn(b, 5, 5);
         Move[] moves = b.getPossibleMoves(Player.RED);
         for (Move m : moves)
         {
