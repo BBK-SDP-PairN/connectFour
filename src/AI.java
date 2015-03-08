@@ -1,11 +1,16 @@
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+
 
 /**
  * An instance represents a Solver that intelligently determines
  * Moves using the Minimax algorithm.
  */
 public class AI implements Solver {
+	
+	private static Set<State> stateTree;
 
     private Player player; // the current player
 
@@ -21,6 +26,7 @@ public class AI implements Solver {
     public AI(Player p, int d) {
         player = p;
         depth = d;
+        stateTree = new TreeSet<State>();
     }
 
     /**
@@ -44,6 +50,14 @@ public class AI implements Solver {
      * Note: If s has a winner (four in a row), it should be a leaf.
      */
     public static void createGameTree(State s, int d) {
+    	stateTree.add(s);
+    	while( d > 1) {
+    		d= d-1;
+    		for (State a : s.getChildren()) {
+    			createGameTree(a, d);
+    		}
+    	}
+    	
         // Note: This method must be recursive, recurse on d,
         // which should get smaller with each recursive call
 

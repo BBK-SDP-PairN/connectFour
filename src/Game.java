@@ -32,7 +32,7 @@ public class Game {
         Solver p1 = new Dummy(Player.RED);
         Solver p2 = new Dummy(Player.YELLOW);
 
-        // Solver p1= new AI(Board.Player.RED, 5);
+        //Solver p1= new AI(Board.Player.RED, 5);
         // Solver p2= new AI(Board.Player.YELLOW, 5);
 
         Game game = new Game(p1, p2);
