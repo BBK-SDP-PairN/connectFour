@@ -78,7 +78,7 @@ public class AI implements Solver {
      * tree rooted at s, indicating how desirable that java.State is to this player.
      */
     public void minimax(State s) {
-        // TODO
+        s.setValue(evaluateBoard(s.getBoard()));
     }
 
     /**
