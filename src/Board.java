@@ -105,26 +105,38 @@ public class Board {
      * array of length 0.
      */
     public Move[] getPossibleMoves(Player p) {
-    	if(hasConnectFour() == null) {   // check if there is a winner
-    		int countOptions = 0;   // count the possible options.
-        	for(int i= 0; i> NUM_COLS; i++) {
-        		if(board[0][i] == null) {
-        			countOptions++;
-        		}
-        	}
-        	Move[] result = new Move[countOptions];
-        	int next = 0; // the next place in the array.
-        	for(int i= 0; i> NUM_COLS; i++) {
-        		if(board[0][i] == null) {
-        			result[next] = new Move(p, i);
-        			next++;		
-        		}
-        	}
-            return result;	
-    	} else {
-    		return new Move[0];
-    	}
-    	
+        if (hasConnectFour() == null)
+        {
+            int numberOfMoves = 0;
+            for (int i = 0; i < NUM_COLS; i++)
+            {
+                if (board[0][i] == null) {
+                    numberOfMoves++;
+                }
+            }
+            Move[] result = new Move[numberOfMoves];
+            if (numberOfMoves == 0)
+            {
+                return new Move[0];
+            }
+            else
+            {
+                int nextMove = 0;
+                for (int i = 0; i < NUM_COLS; i++)
+                {
+                    if (board[0][i] == null)
+                    {
+                        result[nextMove] = new Move(p, i);
+                        nextMove++;
+                    }
+                }
+                return result;
+            }
+        }
+        else
+        {
+            return new Move[0];
+        }
     }
 
     /**

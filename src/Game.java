@@ -32,11 +32,13 @@ public class Game {
         Solver p1 = new Dummy(Player.RED);
         Solver p2 = new Dummy(Player.YELLOW);
 
+        testGetPossibleMoves();
+
         //Solver p1= new AI(Board.Player.RED, 5);
         // Solver p2= new AI(Board.Player.YELLOW, 5);
 
-        Game game = new Game(p1, p2);
-        game.runGame();
+//        Game game = new Game(p1, p2); //Manually Removed For Testing
+//        game.runGame();               //Manually Removed For Testing
         
         /* When testing, you may want to comment out all the above statements
          */
@@ -118,6 +120,22 @@ public class Game {
          * *** We will not look at this class anyway ***/
     }
 
+    public static void testGetPossibleMoves()
+    {
+        Board b = new Board();
+        b.makeMove(new Move(Player.RED, 0));
+        b.makeMove(new Move(Player.YELLOW, 0));
+        b.makeMove(new Move(Player.RED, 0));
+        b.makeMove(new Move(Player.YELLOW, 0));
+        b.makeMove(new Move(Player.RED, 0));
+        b.makeMove(new Move(Player.YELLOW, 0));
+        Move[] moves = b.getPossibleMoves(Player.YELLOW);
+        System.out.println("Testing getPossibleMoves()");
+        for (Move m : moves)
+        {
+            System.out.println(m);
+        }
+    }
 
     /** ************** Do not change anything below here ***************/
 
