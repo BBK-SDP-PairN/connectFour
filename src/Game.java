@@ -33,6 +33,7 @@ public class Game {
         Solver p2 = new Dummy(Player.YELLOW);
 
         testGetPossibleMoves();
+        testInitializeChildren();
 
         //Solver p1= new AI(Board.Player.RED, 5);
         // Solver p2= new AI(Board.Player.YELLOW, 5);
@@ -123,17 +124,57 @@ public class Game {
     public static void testGetPossibleMoves()
     {
         Board b = new Board();
-        b.makeMove(new Move(Player.RED, 0));
-        b.makeMove(new Move(Player.YELLOW, 0));
-        b.makeMove(new Move(Player.RED, 0));
-        b.makeMove(new Move(Player.YELLOW, 0));
-        b.makeMove(new Move(Player.RED, 0));
-        b.makeMove(new Move(Player.YELLOW, 0));
-        Move[] moves = b.getPossibleMoves(Player.YELLOW);
-        System.out.println("Testing getPossibleMoves()");
+        /*
+        Expecting;
+            RED put a piece in column 3
+            RED put a piece in column 4
+            RED put a piece in column 5
+            RED put a piece in column 6
+         */
+
+        fillColumn(b, 0, 6);
+        fillColumn(b, 1, 6);
+        fillColumn(b, 2, 6);
+        Move[] moves = b.getPossibleMoves(Player.RED);
+        System.out.println("Testing Board.getPossibleMoves()");
         for (Move m : moves)
         {
             System.out.println(m);
+        }
+    }
+
+    public static void testInitializeChildren() {
+        System.out.println("Testing State.initializeChildren");
+        Board b = new Board();
+        fillColumn(b, 0, 6);
+        fillColumn(b, 2, 6);
+        Move[] moves = b.getPossibleMoves(Player.RED);
+        for (Move m : moves)
+        {
+            System.out.println(m);
+        }
+        State s = new State(Player.RED, b, null);
+        s.initializeChildren();
+        State[] sChildren = s.getChildren();
+        for (State st : sChildren)
+        {
+            System.out.println(st);
+        }
+    }
+
+    public static void fillColumn(Board b, int col, int depth) {
+        int depthCounter = 0;
+        while (depthCounter < depth)
+        {
+            if (depthCounter % 2 == 0)
+            {
+                b.makeMove(new Move(Player.RED, col));
+            }
+            else
+            {
+                b.makeMove(new Move(Player.YELLOW, col));
+            }
+            depthCounter++;
         }
     }
 
