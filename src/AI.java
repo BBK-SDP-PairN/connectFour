@@ -11,6 +11,8 @@ import java.util.TreeSet;
 public class AI implements Solver {
 	
 	private static Set<State> stateTree;
+	
+	private State currentState;
 
     private Player player; // the current player
 
@@ -27,6 +29,7 @@ public class AI implements Solver {
         player = p;
         depth = d;
         stateTree = new TreeSet<State>();
+        currentState = null;
     }
 
     /**
@@ -34,6 +37,8 @@ public class AI implements Solver {
      */
     @Override
     public Move[] getMoves(Board b) {
+    	
+    
         // TODO
         return null;
     }
@@ -50,18 +55,14 @@ public class AI implements Solver {
      * Note: If s has a winner (four in a row), it should be a leaf.
      */
     public static void createGameTree(State s, int d) {
+    	s.initializeChildren();
     	stateTree.add(s);
     	while( d > 1) {
     		d= d-1;
     		for (State a : s.getChildren()) {
     			createGameTree(a, d);
-    		}
+    		}             
     	}
-    	
-        // Note: This method must be recursive, recurse on d,
-        // which should get smaller with each recursive call
-
-        // TODO
     }
 
     /**
