@@ -114,8 +114,9 @@ public class State implements Comparable<Object> {
         children = new State[possibleMoves.length];
         for (int i = 0; i < possibleMoves.length; i++)
         {
-            children[i] = new State(player, board, possibleMoves[i]);
+            children[i] = new State(player, new Board(board), possibleMoves[i]);
             children[i].getBoard().makeMove(possibleMoves[i]);
+           
         }
     }
 
