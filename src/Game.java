@@ -32,8 +32,10 @@ public class Game {
         Solver p1 = new Dummy(Player.RED);
         Solver p2 = new Dummy(Player.YELLOW);
 
-        testGetPossibleMoves();
-        testInitializeChildren();
+//        testGetPossibleMoves();
+//        testInitializeChildren();
+//        testSpecificState();
+        testCreateGameTree();
 
         //Solver p1= new AI(Board.Player.RED, 5);
         // Solver p2= new AI(Board.Player.YELLOW, 5);
@@ -121,46 +123,57 @@ public class Game {
          * *** We will not look at this class anyway ***/
     }
 
-    public static void testGetPossibleMoves()
-    {
-        Board b = new Board();
-        /*
-        Expecting;
-            RED put a piece in column 3
-            RED put a piece in column 4
-            RED put a piece in column 5
-            RED put a piece in column 6
-         */
-
-        fillColumn(b, 0, 6);
-        fillColumn(b, 1, 6);
-        fillColumn(b, 2, 6);
-        Move[] moves = b.getPossibleMoves(Player.RED);
-        System.out.println("Testing Board.getPossibleMoves()");
-        for (Move m : moves)
-        {
-            System.out.println(m);
-        }
-    }
-
     public static void testInitializeChildren() {
         System.out.println("Testing State.initializeChildren");
         Board b = new Board();
         fillColumn(b, 0, 6);
         fillColumn(b, 2, 6);
+        fillColumn(b, 4, 6);
         fillColumn(b, 5, 5);
-        Move[] moves = b.getPossibleMoves(Player.RED);
-        for (Move m : moves)
-        {
-            System.out.println(m);
-        }
         State s = new State(Player.RED, b, null);
         s.initializeChildren();
         State[] sChildren = s.getChildren();
         for (State st : sChildren)
         {
+            st.initializeChildren();
             System.out.println(st);
         }
+        s.writeToFile(); //Suggests all is working correctly
+    }
+
+    public static void testSpecificState()
+    {
+        System.out.println("Testing State.initializeChildren");
+        Board b = new Board();
+        fillColumn(b, 0, 6);
+        fillColumn(b, 2, 6);
+        fillColumn(b, 4, 6);
+        fillColumn(b, 3, 1);
+        fillColumn(b, 5, 5);
+        Move[] ma = b.getPossibleMoves(Player.RED);
+        State s = new State(Player.RED, b, null);
+//        s.initializeChildren();
+//        State[] sChildren = s.getChildren();
+//        for (State st : s.getChildren())
+//        {
+//            System.out.println(st);
+//        }
+//        s.writeToFile(); //Suggests all is working correctly
+    }
+
+    public static void testCreateGameTree()
+    {
+        AI testAI = new AI(Player.RED, 3); //Needed to initialize AI
+        System.out.println("Testing createGameTree");
+        Board b = new Board();
+        fillColumn(b, 0, 6);
+        fillColumn(b, 2, 6);
+        fillColumn(b, 4, 6);
+        fillColumn(b, 5, 6);
+        State s = new State(Player.RED, b, null);
+        System.out.println(s);
+        AI.createGameTree(s, 2);
+        s.writeToFile();
     }
 
     public static void fillColumn(Board b, int col, int depth) {

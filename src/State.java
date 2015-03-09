@@ -110,13 +110,27 @@ public class State implements Comparable<Object> {
      * initialize all descendants.
      */
     public void initializeChildren() {
-        Move[] possibleMoves = board.getPossibleMoves(player);
+        Move[] possibleMoves;
+        if (this.getLastMove() == null)
+        {
+            possibleMoves = board.getPossibleMoves(player);
+        }
+        else
+        {
+            possibleMoves = board.getPossibleMoves(player.opponent());
+        }
         children = new State[possibleMoves.length];
         for (int i = 0; i < possibleMoves.length; i++)
         {
-            children[i] = new State(player, new Board(board), possibleMoves[i]);
+            if (this.getLastMove() == null)
+            {
+                children[i] = new State(player, new Board(board), possibleMoves[i]);
+            }
+            else
+            {
+                children[i] = new State(player.opponent(), new Board(board), possibleMoves[i]);
+            }
             children[i].getBoard().makeMove(possibleMoves[i]);
-           
         }
     }
 
