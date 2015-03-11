@@ -173,6 +173,7 @@ public class Game {
         State s = new State(Player.RED, b, null);
         System.out.println(s);
         AI.createGameTree(s, 2);
+        AI.minimax(testAI, s);
         s.writeToFile();
     }
 
