@@ -1,7 +1,10 @@
-
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+
+
+
+
+
+
 
 
 /**
@@ -32,9 +35,7 @@ public class AI implements Solver {
     @Override
     public Move[] getMoves(Board b) {
     	
-    
-        // TODO
-        return null;
+    	return null;
     }
 
     /**
@@ -49,15 +50,14 @@ public class AI implements Solver {
      * Note: If s has a winner (four in a row), it should be a leaf.
      */
     public static void createGameTree(State s, int d) {
-        if (d == 0)
-        {
-            return;
+        if (d != 0) {
+        	s.initializeChildren();
+            for (State a : s.getChildren()) {
+                a.initializeChildren();
+                createGameTree(a, d-1);
+            }
         }
-        s.initializeChildren();
-        for (State a : s.getChildren()) {
-            a.initializeChildren();
-            createGameTree(a, d-1);
-        }
+       
     }
 
     /**
@@ -73,8 +73,39 @@ public class AI implements Solver {
      * tree rooted at s, indicating how desirable that java.State is to this player.
      */
     public void minimax(State s) {
-        s.setValue(evaluateBoard(s.getBoard()));
+    	if(s.getChildren().length == 0) {
+    		s.setValue(evaluateBoard(s.getBoard()));
+    	} else {
+    		for(State st :s.getChildren()) {
+    			minimax(st);
+    		}
+    		if(s.getPlayer() == player) {
+    			s.setValue(max(s));
+    		}else{
+    			s.setValue(min(s));
+    		}
+    	}
+    	
     }
+    public int max(State s){
+    	Integer result = null; 
+    	for(State st : s.getChildren()){
+    		if(result == null || st.getValue() > result){
+    			result = st.getValue();
+    		}
+    	}
+		return result;	
+    }
+    public int min(State s){
+    	Integer result = null; 
+    	for(State st : s.getChildren()){
+    		if(result == null || st.getValue() < result){
+    			result = st.getValue();
+    		}
+    	}
+		return result;	
+    }
+    
 
     /**
      * Evaluate the desirability of Board b for this player
